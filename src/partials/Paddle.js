@@ -33,6 +33,9 @@ export default class Paddle {
     // either 0 or the y position minus the speed
 
     this.y = this.y - this.speed;
+    this.y = Math.max (this.y - this.speed, 0);
+    
+
   }
 
   down() {
@@ -41,6 +44,7 @@ export default class Paddle {
     // or the y position plus the speed
 
     this.y = this.y + this.speed;
+    this.y = Math.min(this.y + this.speed, this.boardHeight - this.height);
   }
 
 
