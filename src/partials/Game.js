@@ -38,14 +38,15 @@ export default class Game {
 		KEYS.down
 	);
 	
-  this.radius = 128	       //Height????
-	this.boardWidth = 8      //Radius????
-	this.boardHeight = 256   //Width?????
+  this.radius = 8	       
+	this.boardWidth = 512      
+	this.boardHeight = 256   
 	
 	this.ball = new Ball (
-	  this.boardWidth,
-	  this.boardHeight,
-	  this.radius
+		this.radius,
+		this.boardWidth,
+	  this.boardHeight
+	  
 	);
 	
 	
