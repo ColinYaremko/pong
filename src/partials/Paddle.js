@@ -34,7 +34,7 @@ export default class Paddle {
     let rightX = x + width;
     let topY = y;
     let bottomY = y + height;
-    return [leftX, rightX, topY, bottomY];
+    return { leftX, rightX, topY, bottomY };
   }
 
 

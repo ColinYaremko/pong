@@ -43,14 +43,14 @@ export default class Ball {
       if (this.vx > 0) {
         //if detect collision on right side (p2)
         let paddle = paddleTwo.coordinates(paddleTwo.x, paddleTwo.y, paddleTwo.width, paddleTwo.height);
-        let [leftx, rightx, topY, bottomY] = paddle;
+        let { leftX, topY, bottomY } = paddle;
         
         if (
           //paddles touch
           // right edge of ball >= left edge of paddle
           // ball y is >= paddle top Y
           // ball y is <= paddle bottom Y
-          this.x + this.radius >= leftx
+          this.x + this.radius >= leftX
           && this.y >= topY
           && this.y <= bottomY
 
@@ -61,10 +61,10 @@ export default class Ball {
       } else {
           
             let paddle = paddleOne.coordinates(paddleOne.x, paddleOne.y, paddleOne.width, paddleOne.height);
-            let [leftx, rightx, topY, bottomY] = paddle;
+            let { rightX, topY, bottomY } = paddle;
           if (
             //detect collision on left side
-            this.x - this.radius <= rightx
+            this.x - this.radius <= rightX
             && this.y >= topY
             && this.y <= bottomY
            ) {
