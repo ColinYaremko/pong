@@ -15,7 +15,7 @@ export default class Board {
 		rect.setAttributeNS(null, 'x', '0');
     rect.setAttributeNS(null, 'y', '0');
     rect.setAttributeNS(null, 'stroke', 'black');
-    svg.appendChild(rect)
+    svg.appendChild(rect);
 
     let line = document.createElementNS(SVG_NS, 'line');
     line.setAttributeNS(null, 'x1', this.width/2);
