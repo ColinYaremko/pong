@@ -12,6 +12,9 @@ export default class Paddle {
     this.speed = 10;  //Weekend stretch
     this.score = 0;
 
+
+
+
     document.addEventListener('keydown', event => {
       switch (event.key) {
         case up:
@@ -22,11 +25,20 @@ export default class Paddle {
           break;
       }
 
-
     });
 
-
   }
+
+  coordinates(x, y, width, height) {
+    let leftX = x;
+    let rightX = x + width;
+    let topY = y;
+    let bottomY = y + height;
+    return [leftX, rightX, topY, bottomY];
+  }
+
+
+
 
   up(){
     //GET MAX NUMBER

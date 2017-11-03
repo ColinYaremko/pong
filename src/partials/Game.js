@@ -28,7 +28,7 @@ export default class Game {
 		KEYS.z
 	);
 		
-	this.paddletwo = new Paddle(
+	this.paddleTwo = new Paddle(
 		this.height, 
 		this.paddleWidth, 
 		this.paddleHeight, 
@@ -49,12 +49,23 @@ export default class Game {
 	  
 	);
 	
+
+	document.addEventListener ('keydown', event => {
+		//this 
+		if (event.key === KEYS.spaceBar) {
+			this.pause = !this.pause
+		}
+	});
 	
 	}
 
 
 	render() {
 		
+		if (this.pause) {
+			return;
+		}
+
 		this.gameElement.innerHTML = '';
 
 		let svg = document.createElementNS(SVG_NS, 'svg');
@@ -68,9 +79,9 @@ export default class Game {
 		this.board.render(svg);
 
 		this.paddleOne.render(svg);
-		this.paddletwo.render(svg);
+		this.paddleTwo.render(svg);
 		
-		this.ball.render(svg);
+		this.ball.render(svg, this.paddleOne, this.paddleTwo);
 
 	}
 
