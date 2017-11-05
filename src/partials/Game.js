@@ -97,13 +97,18 @@ export default class Game {
 
 		this.gameElement.appendChild(svg);
 		this.board.render(svg);
+
 		this.paddleOne.render(svg);
 		this.paddleTwo.render(svg);
+		//this.paddleThree.render(svg);
+
 		this.ball.render(svg, this.paddleOne, this.paddleTwo, this.paddleThree);
 		this.ball.render(svg, this.paddleOne, this.paddleTwo, this.paddleThree);
+		this.ball2.render(svg, this.paddleOne, this.paddleTwo, this.paddleThree);		
+
 		this.Score1.render(svg, this.paddleOne.score);
 		this.Score2.render(svg, this.paddleTwo.score);
-		//this.paddleThree.render(svg);
-		this.ball2.render(svg, this.paddleOne, this.paddleTwo, this.paddleThree);
+
+
 	}
 }

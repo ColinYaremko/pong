@@ -9,7 +9,7 @@ export default class Ball {
     this.direction = 1;
 
     this.ping = new Audio('public/sounds/pong-01.wav');
-
+    this.bang = new Audio('public/sounds/pong-04.wav');
     this.reset()
   }
 
@@ -36,6 +36,7 @@ export default class Ball {
       this.direction = -1;
       this.goal(paddleOne);
     } else if (hitTop || hitBottom) {
+      this.bang.play();
       this.vy = -this.vy;
     }
   }
@@ -43,7 +44,7 @@ export default class Ball {
   paddleCollision(paddleOne, paddleTwo, paddleThree) {
     if (this.vx > 0) {
       // If detect collision on right side (p2)
-      let paddle = paddleTwo.coordinates(paddleTwo.x, paddleTwo.y, paddleTwo.width, paddleTwo.height);
+      let paddle = paddleThree.coordinates(paddleTwo.x, paddleTwo.y, paddleTwo.width, paddleTwo.height);
       let {
         leftX,
         topY,

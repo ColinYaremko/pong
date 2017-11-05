@@ -6,6 +6,7 @@ Adaptations made to the game:
 * Gave some nicer colors and moved the placement of the scoreboard.
 * Reversed the direction so that no matter who scores, the ball will start going to player 1.
 * Addition of a second larger ball.
+* Play Pong-04.wav for the wall collision.
 * Speed of the paddle movement increase to have the height of the paddle per key press.
 * Increase the speed of the original small ball by rendering it twice.
 * Attempted to create a P2 lazy mode with the "l" keypress where the paddle would increase to full boardheight.  Had issues where it wouldn't detect the ball collision and the rendering.  Code left in place as it didn't affect the game play.  Commented out where gameplay was affected.

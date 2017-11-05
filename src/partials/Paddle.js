@@ -21,7 +21,7 @@ export default class Paddle {
           this.down();
           break;
         // case large:
-        //   this.large();  
+        //   this.large(); 
       }
     });
   }
