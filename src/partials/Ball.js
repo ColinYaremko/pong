@@ -33,7 +33,7 @@ export default class Ball {
       this.direction = -1;
       this.goal(paddleTwo);
     } else if (hitRight) {
-      this.direction = 1;
+      this.direction = -1;
       this.goal(paddleOne);
     } else if (hitTop || hitBottom) {
       this.vy = -this.vy;
@@ -69,7 +69,7 @@ export default class Ball {
         this.vx = -this.vx
         this.ping.play();
       }
-      else {  // attempting to work with paddle3 collision
+      else {  // attempting to work with paddle3 collision 
       let paddle = paddleThree.coordinates(paddleThree.x, paddleThree.y, paddleThree.width, paddleThree.height);
       let { leftX, topY, bottomY } = paddle;
       if (
