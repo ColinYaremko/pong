@@ -49,9 +49,9 @@ export default class Paddle {
     this.y = Math.min(this.y + this.speed, this.boardHeight - this.height);
   }
 
-  // large() {
-  //   this.paddleThree.height = 231
-  // }
+   large() {
+     this.paddleThree.height = 231
+   }
 
   render(svg) {
 

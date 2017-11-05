@@ -40,7 +40,7 @@ export default class Ball {
     }
   }
 
-  paddleCollision(paddleOne, paddleTwo) {
+  paddleCollision(paddleOne, paddleTwo, paddleThree) {
     if (this.vx > 0) {
       // If detect collision on right side (p2)
       let paddle = paddleTwo.coordinates(paddleTwo.x, paddleTwo.y, paddleTwo.width, paddleTwo.height);
@@ -67,21 +67,33 @@ export default class Ball {
         this.y <= bottomY
       ) {
         this.vx = -this.vx
+        this.ping.play();
       }
-    }
-  }
+      else {  // attempting to work with paddle3 collision
+      let paddle = paddleThree.coordinates(paddleThree.x, paddleThree.y, paddleThree.width, paddleThree.height);
+      let { leftX, topY, bottomY } = paddle;
+      if (
+        this.x + this.radius >= leftX &&
+        this.y >= topY &&
+        this.y <= bottomY
+      ) {
+        this.vx = -this.vx;
+        this.ping.play();
+      }
+      }
+  }}
 
   goal(paddle) {
     paddle.score += 1;
     this.reset();
   }
 
-  render(svg, paddleOne, paddleTwo) {
+  render(svg, paddleOne, paddleTwo, paddleThree) {
 
     this.y = this.y + this.vy;
     this.x = this.x + this.vx;
-    this.wallCollision(paddleOne, paddleTwo);
-    this.paddleCollision(paddleOne, paddleTwo);
+    this.wallCollision(paddleOne, paddleTwo, paddleThree);
+    this.paddleCollision(paddleOne, paddleTwo, paddleThree);
 
     let ball = document.createElementNS(SVG_NS, 'circle');
     ball.setAttributeNS(null, 'r', this.radius);
