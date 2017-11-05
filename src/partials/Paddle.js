@@ -9,7 +9,7 @@ export default class Paddle {
     this.x = x;
     this.y = y;
 
-    this.speed = 10; //Weekend stretch
+    this.speed = 27; //Stretch from 10.  Just seems to move the paddle faster (27 is half paddle height)
     this.score = 0;
 
     document.addEventListener('keydown', event => {
@@ -20,6 +20,8 @@ export default class Paddle {
         case down:
           this.down();
           break;
+        // case large:
+        //   this.large();  
       }
     });
   }
@@ -46,6 +48,10 @@ export default class Paddle {
     this.y = this.y + this.speed;
     this.y = Math.min(this.y + this.speed, this.boardHeight - this.height);
   }
+
+  // large() {
+  //   this.paddleThree.height = 231
+  // }
 
   render(svg) {
 
