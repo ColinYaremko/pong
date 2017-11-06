@@ -40,20 +40,24 @@ export default class Game {
 			KEYS.down
 		);
 
-		this.paddleThree = new Paddle( //Player 2 - large paddle
-			this.height,
-			this.paddleWidth,
-			231, // new paddle Height for lazy mode
-			(this.width - this.paddleWidth - this.boardGap), //mathmetical to get p3 paddle spacing
-			0, 
-			KEYS.up,
-			KEYS.down
-		);
+		document.addEventListener('keydown', event => {  // Player two paddle height increased to full height
+			if (event.key === KEYS.l) {                    // 
+				 this.paddleTwo.height = this.height
+				 this.y = 0
+			}
+		});
 
-		document.addEventListener('keydown', event => {  // Not totally sure how to tie it into the rendering
-			if (event.key === KEYS.l) {                    // to keep it there for the time needed.
-				let svg = document.createElementNS(SVG_NS, 'svg');
-				this.paddleThree.render(svg);
+		document.addEventListener('keydown', event => {  // Player one paddle height increased to Full height
+			if (event.key === KEYS.x) {                    // 
+				 this.paddleOne.height = this.height
+				 this.y = 0
+			}
+		});
+
+		document.addEventListener('keydown', event => {  // Both paddles normalized to paddleHeight value.
+			if (event.key === KEYS.n) {                    // 
+				 this.paddleOne.height = this.paddleHeight;
+				 this.paddleTwo.height = this.paddleHeight
 			}
 		});
 
@@ -100,14 +104,15 @@ export default class Game {
 
 		this.paddleOne.render(svg);
 		this.paddleTwo.render(svg);
-		//this.paddleThree.render(svg);
-
-		this.ball.render(svg, this.paddleOne, this.paddleTwo, this.paddleThree);
-		this.ball.render(svg, this.paddleOne, this.paddleTwo, this.paddleThree);
-		this.ball2.render(svg, this.paddleOne, this.paddleTwo, this.paddleThree);		
+	
+		this.ball.render(svg, this.paddleOne, this.paddleTwo);
+		this.ball.render(svg, this.paddleOne, this.paddleTwo);
+		this.ball2.render(svg, this.paddleOne, this.paddleTwo);		
 
 		this.Score1.render(svg, this.paddleOne.score);
 		this.Score2.render(svg, this.paddleTwo.score);
+
+		
 
 
 	}

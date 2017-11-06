@@ -83,7 +83,8 @@ var KEYS = exports.KEYS = {
   z: 'z', // player 1 down key
   up: 'ArrowUp', // player 2 up key
   down: 'ArrowDown', // player 2 down key
-  spaceBar: ' ' // we'll use this later...pause
+  spaceBar: ' ', // Pause
+  l: 'l' // Large Paddle for P2 in theory
 };
 
 /***/ }),
@@ -137,39 +138,51 @@ var Game = function () {
 		this.width = width;
 		this.height = height;
 
-		// Other code goes here...
 		this.gameElement = document.getElementById(this.element);
 		this.board = new _Board2.default(this.width, this.height);
 
 		this.boardGap = 10;
 		this.paddleWidth = 8;
 		this.paddleHeight = 56;
+		this.paddleOne = new _Paddle2.default( // Player 1
+		this.height, this.paddleWidth, this.paddleHeight, this.boardGap, (this.height - this.paddleHeight) / 2, _settings.KEYS.a, _settings.KEYS.z);
 
-		this.paddleOne = new _Paddle2.default(this.height, this.paddleWidth, this.paddleHeight, this.boardGap, (this.height - this.paddleHeight) / 2, _settings.KEYS.a, _settings.KEYS.z);
-
-		this.paddleTwo = new _Paddle2.default(this.height, this.paddleWidth, this.paddleHeight, this.width - this.paddleWidth - this.boardGap, //mathmetical to get p2 paddle spacing
+		this.paddleTwo = new _Paddle2.default( //Player 2
+		this.height, this.paddleWidth, this.paddleHeight, //= 321,
+		this.width - this.paddleWidth - this.boardGap, //mathmetical to get p2 paddle spacing
 		(this.height - this.paddleHeight) / 2, _settings.KEYS.up, _settings.KEYS.down);
 
-		this.Score1 = new _Score2.default(this.width / 2 - 50, 30, 30); //SCORE
-		//	this.x = 0,
-		//  this.y = 30,
-		//  this.size = 30
-		//)
+		this.paddleThree = new _Paddle2.default( //Player 2 - large paddle
+		this.height, this.paddleWidth, 231, // new paddle Height for lazy mode
+		this.width - this.paddleWidth - this.boardGap, //mathmetical to get p3 paddle spacing
+		0, _settings.KEYS.up, _settings.KEYS.down);
 
-		this.Score2 = new _Score2.default(this.width / 2 + 50, 30, 30); ////SCORE
-		//	this.x = this.width/2,
-		//  this.y = 30,
-		//  this.size = 30
-		//)
+		// document.addEventListener('keydown', event => {  // Not totally sure how to tie it into the rendering
+		// 	if (event.key === KEYS.l) {                    // to keep it there for the time needed.
+		// 		let svg = document.createElementNS(SVG_NS, 'svg');
+		// 		this.paddleThree.render(svg);
+		// 	}
+		// });
+
+		// document.addEventListener('keydown', event => {  // Not totally sure how to tie it into the rendering
+		// 	if (event.key === KEYS.l) {                    // to keep it there for the time needed.
+		// 		this.paddleTwo.height = 321
+		// 	}
+		// });
+
+		this.Score1 = new _Score2.default(20, 30, 30); //SCORE
+		this.Score2 = new _Score2.default(this.width / 2 + 20, 30, 30); //SCORE
 
 		this.radius = 8;
 		this.boardWidth = 512;
 		this.boardHeight = 256;
+		this.ball = new _Ball2.default( // small original ball
+		this.radius, this.boardWidth, this.boardHeight);
 
-		this.ball = new _Ball2.default(this.radius, this.boardWidth, this.boardHeight);
+		this.ball2 = new _Ball2.default(20, // radius of the 2nd ball
+		this.boardWidth, this.boardHeight);
 
 		document.addEventListener('keydown', function (event) {
-			//this 
 			if (event.key === _settings.KEYS.spaceBar) {
 				_this.pause = !_this.pause;
 			}
@@ -179,7 +192,6 @@ var Game = function () {
 	_createClass(Game, [{
 		key: 'render',
 		value: function render() {
-
 			if (this.pause) {
 				return;
 			}
@@ -191,15 +203,17 @@ var Game = function () {
 			svg.setAttributeNS(null, 'height', this.height);
 			svg.setAttributeNS(null, 'viewbox', '0 0 ' + this.width + ' ' + this.height);
 			svg.setAttributeNS(null, 'version', '1.1');
-			// More code goes here...
-			this.gameElement.appendChild(svg);
 
+			this.gameElement.appendChild(svg);
 			this.board.render(svg);
 
 			this.paddleOne.render(svg);
 			this.paddleTwo.render(svg);
+			//this.paddleThree.render(svg);
 
-			this.ball.render(svg, this.paddleOne, this.paddleTwo);
+			this.ball.render(svg, this.paddleOne, this.paddleTwo, this.paddleThree);
+			this.ball.render(svg, this.paddleOne, this.paddleTwo, this.paddleThree);
+			this.ball2.render(svg, this.paddleOne, this.paddleTwo, this.paddleThree);
 
 			this.Score1.render(svg, this.paddleOne.score);
 			this.Score2.render(svg, this.paddleTwo.score);
@@ -286,6 +300,10 @@ var Ball = function () {
     this.boardHeight = boardHeight;
     this.direction = 1;
 
+    this.ping = new Audio('public/sounds/pong-01.wav');
+    this.ping2 = new Audio('public/sounds/pong-02.wav');
+    this.bang = new Audio('public/sounds/pong-03.wav');
+
     this.reset();
   }
 
@@ -294,13 +312,10 @@ var Ball = function () {
     value: function reset() {
       this.x = this.boardWidth / 2;
       this.y = this.boardHeight / 2;
-
       this.vy = 0;
-
       while (this.vy === 0) {
         this.vy = Math.floor(Math.random() * 10 - 5);
       }
-
       this.vx = this.direction * (6 - Math.abs(this.vy));
     }
   }, {
@@ -315,45 +330,51 @@ var Ball = function () {
         this.direction = -1;
         this.goal(paddleTwo);
       } else if (hitRight) {
-        this.direction = 1;
+        this.direction = -1;
         this.goal(paddleOne);
       } else if (hitTop || hitBottom) {
+        this.bang.play();
         this.vy = -this.vy;
       }
     }
   }, {
     key: 'paddleCollision',
-    value: function paddleCollision(paddleOne, paddleTwo) {
+    value: function paddleCollision(paddleOne, paddleTwo, paddleThree) {
       if (this.vx > 0) {
-        //if detect collision on right side (p2)
+        // If detect collision on right side (p2)
         var paddle = paddleTwo.coordinates(paddleTwo.x, paddleTwo.y, paddleTwo.width, paddleTwo.height);
         var leftX = paddle.leftX,
             topY = paddle.topY,
             bottomY = paddle.bottomY;
 
-
-        if (
-        //paddles touch
-        // right edge of ball >= left edge of paddle
-        // ball y is >= paddle top Y
-        // ball y is <= paddle bottom Y
-        this.x + this.radius >= leftX && this.y >= topY && this.y <= bottomY) {
+        if (this.x + this.radius >= leftX && this.y >= topY && this.y <= bottomY) {
           this.vx = -this.vx;
+          this.ping.play();
         }
       } else {
-
         var _paddle = paddleOne.coordinates(paddleOne.x, paddleOne.y, paddleOne.width, paddleOne.height);
         var rightX = _paddle.rightX,
             _topY = _paddle.topY,
             _bottomY = _paddle.bottomY;
 
         if (
-        //detect collision on left side
+        //detect collision on left side (p1)
         this.x - this.radius <= rightX && this.y >= _topY && this.y <= _bottomY) {
           this.vx = -this.vx;
+          this.ping2.play();
+        } else {
+          // attempting to work with paddle3 collision 
+          var _paddle2 = paddleThree.coordinates(paddleThree.x, paddleThree.y, paddleThree.width, paddleThree.height);
+          var _leftX = _paddle2.leftX,
+              _topY2 = _paddle2.topY,
+              _bottomY2 = _paddle2.bottomY;
+
+          if (this.x + this.radius >= _leftX && this.y >= _topY2 && this.y <= _bottomY2) {
+            this.vx = -this.vx;
+            this.ping.play();
+          }
         }
       }
-      // if detect collision on left side (p1)
     }
   }, {
     key: 'goal',
@@ -361,26 +382,20 @@ var Ball = function () {
       paddle.score += 1;
       this.reset();
     }
-    //two lines of code.....
-    // position of ball.  Increment score
-
-
   }, {
     key: 'render',
-    value: function render(svg, paddleOne, paddleTwo) {
+    value: function render(svg, paddleOne, paddleTwo, paddleThree) {
 
       this.y = this.y + this.vy;
       this.x = this.x + this.vx;
-
-      this.wallCollision(paddleOne, paddleTwo);
-      this.paddleCollision(paddleOne, paddleTwo);
+      this.wallCollision(paddleOne, paddleTwo, paddleThree);
+      this.paddleCollision(paddleOne, paddleTwo, paddleThree);
 
       var ball = document.createElementNS(_settings.SVG_NS, 'circle');
       ball.setAttributeNS(null, 'r', this.radius);
       ball.setAttributeNS(null, 'cx', this.x);
       ball.setAttributeNS(null, 'cy', this.y);
       ball.setAttributeNS(null, 'fill', 'yellow');
-
       svg.appendChild(ball);
     }
   }]);
@@ -436,9 +451,6 @@ var Board = function () {
       line.setAttributeNS(null, 'stroke-width', 2);
       line.setAttributeNS(null, 'stroke', 'white');
       svg.appendChild(line);
-
-      // More code goes here...
-
     }
   }]);
 
@@ -476,7 +488,7 @@ var Paddle = function () {
     this.x = x;
     this.y = y;
 
-    this.speed = 10; //Weekend stretch
+    this.speed = 27; //Stretch from 10.  Just seems to move the paddle faster (27 is half paddle height)
     this.score = 0;
 
     document.addEventListener('keydown', function (event) {
@@ -487,6 +499,8 @@ var Paddle = function () {
         case down:
           _this.down();
           break;
+        // case large:
+        //   this.large(); 
       }
     });
   }
@@ -498,26 +512,29 @@ var Paddle = function () {
       var rightX = x + width;
       var topY = y;
       var bottomY = y + height;
-      return { leftX: leftX, rightX: rightX, topY: topY, bottomY: bottomY };
+      return {
+        leftX: leftX,
+        rightX: rightX,
+        topY: topY,
+        bottomY: bottomY
+      };
     }
   }, {
     key: 'up',
     value: function up() {
-      //GET MAX NUMBER
-      // either 0 or the y position minus the speed
-
       this.y = this.y - this.speed;
       this.y = Math.max(this.y - this.speed, 0);
     }
   }, {
     key: 'down',
     value: function down() {
-      //GET MIN NUMBER
-      //either the height of the board minus the height of the paddle
-      // or the y position plus the speed
-
       this.y = this.y + this.speed;
       this.y = Math.min(this.y + this.speed, this.boardHeight - this.height);
+    }
+  }, {
+    key: 'large',
+    value: function large() {
+      this.paddleThree.height = 231;
     }
   }, {
     key: 'render',
@@ -563,30 +580,23 @@ var Score = function () {
     this.y = y;
     this.size = size;
   }
-  //...
 
   _createClass(Score, [{
     key: 'render',
     value: function render(svg, score) {
-
       var text = document.createElementNS(_settings.SVG_NS, 'text');
       text.setAttributeNS(null, 'x', this.x);
       text.setAttributeNS(null, 'y', this.y);
       text.setAttributeNS(null, 'font-size', this.size);
       text.setAttributeNS(null, 'font-family', 'Silkscreen Web');
       text.setAttributeNS(null, 'fill', 'white');
-
       text.textContent = score;
-
       svg.appendChild(text);
     }
   }]);
 
   return Score;
 }();
-
-// <text x="206" y="30" font-family="'Silkscreen Web', monotype" font-size="30" fill="white">0</text>
-
 
 exports.default = Score;
 

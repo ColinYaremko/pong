@@ -10,7 +10,8 @@ export default class Ball {
 
     this.ping = new Audio('public/sounds/pong-01.wav');
     this.ping2 = new Audio('public/sounds/pong-02.wav');
-    this.bang = new Audio('public/sounds/pong-04.wav');
+    this.bang = new Audio('public/sounds/pong-03.wav');
+
     this.reset()
   }
 
@@ -42,7 +43,7 @@ export default class Ball {
     }
   }
 
-  paddleCollision(paddleOne, paddleTwo, paddleThree) {
+  paddleCollision(paddleOne, paddleTwo) {
     if (this.vx > 0) {
       // If detect collision on right side (p2)
       let paddle = paddleTwo.coordinates(paddleTwo.x, paddleTwo.y, paddleTwo.width, paddleTwo.height);
@@ -71,31 +72,20 @@ export default class Ball {
         this.vx = -this.vx
         this.ping2.play();
       }
-      else {  // attempting to work with paddle3 collision 
-      let paddle = paddleThree.coordinates(paddleThree.x, paddleThree.y, paddleThree.width, paddleThree.height);
-      let { leftX, topY, bottomY } = paddle;
-      if (
-        this.x + this.radius >= leftX &&
-        this.y >= topY &&
-        this.y <= bottomY
-      ) {
-        this.vx = -this.vx;
-        this.ping.play();
       }
-      }
-  }}
+  }
 
   goal(paddle) {
     paddle.score += 1;
     this.reset();
   }
 
-  render(svg, paddleOne, paddleTwo, paddleThree) {
+  render(svg, paddleOne, paddleTwo) {
 
     this.y = this.y + this.vy;
     this.x = this.x + this.vx;
-    this.wallCollision(paddleOne, paddleTwo, paddleThree);
-    this.paddleCollision(paddleOne, paddleTwo, paddleThree);
+    this.wallCollision(paddleOne, paddleTwo);
+    this.paddleCollision(paddleOne, paddleTwo);
 
     let ball = document.createElementNS(SVG_NS, 'circle');
     ball.setAttributeNS(null, 'r', this.radius);

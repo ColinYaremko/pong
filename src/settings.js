@@ -6,5 +6,7 @@ export const KEYS = {
   up: 'ArrowUp', // player 2 up key
   down: 'ArrowDown', // player 2 down key
   spaceBar: ' ', // Pause
-  l: 'l' // Large Paddle for P2 in theory
+  l: 'l', // Large Paddle for P2 in theory
+  x: 'x', // Large paddle for P1
+  n: 'n'  // Normalize both paddles to paddleHeight
 };
