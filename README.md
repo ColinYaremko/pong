@@ -78,3 +78,12 @@ Adaptations made to the game:
 
 * See also the list of contributors who participated in this project.
 
+# Current hurdles
+
+* Still need to understand javascript better.  More reading and practice.
+
+## Observations
+
+* Interesting to see the use of JS to take a completely empty HTML page and make it come to life.  Definitive positive aspects for that until the point of loading the page full of JS where it affects the load times and makes it slower and more of a memory hog.
+
+* Still an interesting project.
