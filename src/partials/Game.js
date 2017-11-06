@@ -40,34 +40,34 @@ export default class Game {
 			KEYS.down
 		);
 
-		document.addEventListener('keydown', event => {  // Player two paddle height increased to full height
-			if (event.key === KEYS.l) {                    // 
-				 this.paddleTwo.height = this.height
-				 this.y = 0
+		document.addEventListener('keydown', event => { // Player two paddle height increased to full height
+			if (event.key === KEYS.l) { // 
+				this.paddleTwo.height = this.height
+				this.y = 0
 			}
 		});
 
-		document.addEventListener('keydown', event => {  // Player one paddle height increased to Full height
-			if (event.key === KEYS.x) {                    // 
-				 this.paddleOne.height = this.height
-				 this.y = 0
+		document.addEventListener('keydown', event => { // Player one paddle height increased to Full height
+			if (event.key === KEYS.x) { // 
+				this.paddleOne.height = this.height
+				this.y = 0
 			}
 		});
 
-		document.addEventListener('keydown', event => {  // Both paddles normalized to paddleHeight value.
-			if (event.key === KEYS.n) {                    // 
-				 this.paddleOne.height = this.paddleHeight;
-				 this.paddleTwo.height = this.paddleHeight
+		document.addEventListener('keydown', event => { // Both paddles normalized to paddleHeight value.
+			if (event.key === KEYS.n) { // 
+				this.paddleOne.height = this.paddleHeight;
+				this.paddleTwo.height = this.paddleHeight
 			}
 		});
 
 		this.Score1 = new Score(20, 30, 30); //SCORE
-		this.Score2 = new Score(this.width/2 + 20, 30, 30); //SCORE
+		this.Score2 = new Score(this.width / 2 + 20, 30, 30); //SCORE
 
 		this.radius = 8
 		this.boardWidth = 512
 		this.boardHeight = 256
-		this.ball = new Ball(  // small original ball
+		this.ball = new Ball( // small original ball
 			this.radius,
 			this.boardWidth,
 			this.boardHeight
@@ -104,15 +104,15 @@ export default class Game {
 
 		this.paddleOne.render(svg);
 		this.paddleTwo.render(svg);
-	
+
 		this.ball.render(svg, this.paddleOne, this.paddleTwo);
 		this.ball.render(svg, this.paddleOne, this.paddleTwo);
-		this.ball2.render(svg, this.paddleOne, this.paddleTwo);		
+		this.ball2.render(svg, this.paddleOne, this.paddleTwo);
 
 		this.Score1.render(svg, this.paddleOne.score);
 		this.Score2.render(svg, this.paddleTwo.score);
 
-		
+
 
 
 	}
