@@ -12,6 +12,7 @@ Adaptations made to the game:
 * Increase the speed of the original small ball by rendering it twice.
 * Created a "lonely" mode for player 1 and/or player 2.  Move the player two paddle to the top of the screen and push the 'l' key.  The paddle will now be the full height and the game only requires a player one.  The same can be done if someone wants to use player two.  Move the player one paddle to the top of the screen and the key 'x' will make the player one paddle the full size. Pressing the 'n' key will normalize both paddles.
 
+![pong image](https://user-images.githubusercontent.com/32310250/33283894-2314eb0e-d362-11e7-9578-029ccf119095.PNG)
 
 ** pong image included (pong image.png)**
 
