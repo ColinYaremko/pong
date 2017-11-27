@@ -14,7 +14,7 @@ Adaptations made to the game:
 
 ![pong image](https://user-images.githubusercontent.com/32310250/33283894-2314eb0e-d362-11e7-9578-029ccf119095.PNG)
 
-** pong image included (pong image.png)**
+
 
 
 ## Setup
@@ -35,7 +35,9 @@ Adaptations made to the game:
 
 * Space bar: pause and unpause game
 
-* l : supposed to be for player 2 lazy mode (issues with collision and render)
+* l : player 2 lonely mode 
+* x : player 1 lonely mode
+* n : Normalize paddles
 
 **Player 1:**
 * a: up
