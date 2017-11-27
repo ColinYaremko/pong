@@ -15,7 +15,7 @@ Adaptations made to the game:
 ![pong image](https://user-images.githubusercontent.com/32310250/33283894-2314eb0e-d362-11e7-9578-029ccf119095.PNG)
 
 
-
+Hosted :  https://colinyaremko.github.io/pong/
 
 ## Setup
 
