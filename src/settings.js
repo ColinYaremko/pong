@@ -8,5 +8,5 @@ export const KEYS = {
   spaceBar: ' ', // Pause
   l: 'l', // Large Paddle for P2 in theory
   x: 'x', // Large paddle for P1
-  n: 'n'  // Normalize both paddles to paddleHeight
+  n: 'n' // Normalize both paddles to paddleHeight
 };

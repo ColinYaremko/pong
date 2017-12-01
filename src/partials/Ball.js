@@ -1,4 +1,6 @@
-import { SVG_NS } from '../settings.js';
+import {
+  SVG_NS
+} from '../settings.js';
 
 export default class Ball {
 
@@ -62,7 +64,11 @@ export default class Ball {
       }
     } else {
       let paddle = paddleOne.coordinates(paddleOne.x, paddleOne.y, paddleOne.width, paddleOne.height);
-      let { rightX, topY, bottomY } = paddle;
+      let {
+        rightX,
+        topY,
+        bottomY
+      } = paddle;
       if (
         //detect collision on left side (p1)
         this.x - this.radius <= rightX &&
@@ -72,7 +78,7 @@ export default class Ball {
         this.vx = -this.vx
         this.ping2.play();
       }
-      }
+    }
   }
 
   goal(paddle) {

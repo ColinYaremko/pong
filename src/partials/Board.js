@@ -1,4 +1,6 @@
-import { SVG_NS } from '../settings.js';
+import {
+  SVG_NS
+} from '../settings.js';
 
 export default class Board {
 
