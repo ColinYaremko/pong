@@ -149,36 +149,30 @@ var Game = function () {
 		this.paddleOne = new _Paddle2.default( // Player 1
 		this.height, this.paddleWidth, this.paddleHeight, this.boardGap, (this.height - this.paddleHeight) / 2, _settings.KEYS.a, _settings.KEYS.z);
 
-		this.paddleTwo = new _Paddle2.default( //Player 2
+		this.paddleTwo = new _Paddle2.default( // Player 2
 		this.height, this.paddleWidth, this.paddleHeight, this.width - this.paddleWidth - this.boardGap, //mathmetical to get p2 paddle spacing
 		(this.height - this.paddleHeight) / 2, _settings.KEYS.up, _settings.KEYS.down);
 
-		document.addEventListener('keydown', function (event) {
-			// Player two paddle height increased to full height
-			if (event.key === _settings.KEYS.l) {
-				// 
-				_this.paddleTwo.height = _this.height;
-				_this.y = 0;
-			}
-		});
+		// document.addEventListener('keydown', event => { // Player two paddle height increased to full height
+		// 	if (event.key === KEYS.l) { // 
+		// 		this.paddleTwo.height = this.height
+		// 		this.y = 0
+		// 	}
+		// });
 
-		document.addEventListener('keydown', function (event) {
-			// Player one paddle height increased to Full height
-			if (event.key === _settings.KEYS.x) {
-				// 
-				_this.paddleOne.height = _this.height;
-				_this.y = 0;
-			}
-		});
+		// document.addEventListener('keydown', event => { // Player one paddle height increased to Full height
+		// 	if (event.key === KEYS.x) { // 
+		// 		this.paddleOne.height = this.height
+		// 		this.y = 0
+		// 	} 
+		// });
 
-		document.addEventListener('keydown', function (event) {
-			// Both paddles normalized to paddleHeight value.
-			if (event.key === _settings.KEYS.n) {
-				// 
-				_this.paddleOne.height = _this.paddleHeight;
-				_this.paddleTwo.height = _this.paddleHeight;
-			}
-		});
+		// document.addEventListener('keydown', event => { // Both paddles normalized to paddleHeight value.
+		// 	if (event.key === KEYS.n) { // 
+		// 		this.paddleOne.height = this.paddleHeight;
+		// 		this.paddleTwo.height = this.paddleHeight
+		// 	}
+		// });
 
 		this.Score1 = new _Score2.default(20, 30, 30); //SCORE
 		this.Score2 = new _Score2.default(this.width / 2 + 20, 30, 30); //SCORE
@@ -195,6 +189,18 @@ var Game = function () {
 		document.addEventListener('keydown', function (event) {
 			if (event.key === _settings.KEYS.spaceBar) {
 				_this.pause = !_this.pause;
+			} else if (event.key === _settings.KEYS.l) {
+				// player two paddle large size
+				_this.paddleTwo.height = _this.height;
+				_this.y = 0;
+			} else if (event.key === _settings.KEYS.x) {
+				// player one paddle large size
+				_this.paddleOne.height = _this.height;
+				_this.y = 0;
+			} else if (event.key === _settings.KEYS.n) {
+				// normalize paddles
+				_this.paddleOne.height = _this.paddleHeight;
+				_this.paddleTwo.height = _this.paddleHeight;
 			}
 		});
 	}
@@ -221,8 +227,8 @@ var Game = function () {
 			this.paddleTwo.render(svg);
 
 			this.ball.render(svg, this.paddleOne, this.paddleTwo);
-			this.ball.render(svg, this.paddleOne, this.paddleTwo);
-			this.ball2.render(svg, this.paddleOne, this.paddleTwo);
+			// this.ball.render(svg, this.paddleOne, this.paddleTwo);  //second call used to make small ball faster
+			this.ball2.render(svg, this.paddleOne, this.paddleTwo); //Bigger ball
 
 			this.Score1.render(svg, this.paddleOne.score);
 			this.Score2.render(svg, this.paddleTwo.score);

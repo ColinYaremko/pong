@@ -30,7 +30,7 @@ export default class Game {
 			KEYS.z
 		);
 
-		this.paddleTwo = new Paddle( //Player 2
+		this.paddleTwo = new Paddle( // Player 2
 			this.height,
 			this.paddleWidth,
 			this.paddleHeight,
@@ -40,26 +40,26 @@ export default class Game {
 			KEYS.down
 		);
 
-		document.addEventListener('keydown', event => { // Player two paddle height increased to full height
-			if (event.key === KEYS.l) { // 
-				this.paddleTwo.height = this.height
-				this.y = 0
-			}
-		});
+		// document.addEventListener('keydown', event => { // Player two paddle height increased to full height
+		// 	if (event.key === KEYS.l) { // 
+		// 		this.paddleTwo.height = this.height
+		// 		this.y = 0
+		// 	}
+		// });
 
-		document.addEventListener('keydown', event => { // Player one paddle height increased to Full height
-			if (event.key === KEYS.x) { // 
-				this.paddleOne.height = this.height
-				this.y = 0
-			}
-		});
+		// document.addEventListener('keydown', event => { // Player one paddle height increased to Full height
+		// 	if (event.key === KEYS.x) { // 
+		// 		this.paddleOne.height = this.height
+		// 		this.y = 0
+		// 	} 
+		// });
 
-		document.addEventListener('keydown', event => { // Both paddles normalized to paddleHeight value.
-			if (event.key === KEYS.n) { // 
-				this.paddleOne.height = this.paddleHeight;
-				this.paddleTwo.height = this.paddleHeight
-			}
-		});
+		// document.addEventListener('keydown', event => { // Both paddles normalized to paddleHeight value.
+		// 	if (event.key === KEYS.n) { // 
+		// 		this.paddleOne.height = this.paddleHeight;
+		// 		this.paddleTwo.height = this.paddleHeight
+		// 	}
+		// });
 
 		this.Score1 = new Score(20, 30, 30); //SCORE
 		this.Score2 = new Score(this.width / 2 + 20, 30, 30); //SCORE
@@ -82,7 +82,20 @@ export default class Game {
 		document.addEventListener('keydown', event => {
 			if (event.key === KEYS.spaceBar) {
 				this.pause = !this.pause
+			} else
+			if (event.key === KEYS.l) { // player two paddle large size
+				this.paddleTwo.height = this.height
+				this.y = 0
+			} else
+			if (event.key === KEYS.x) { // player one paddle large size
+				this.paddleOne.height = this.height
+				this.y = 0
+			} else
+			if (event.key === KEYS.n) { // normalize paddles
+				this.paddleOne.height = this.paddleHeight;
+				this.paddleTwo.height = this.paddleHeight
 			}
+
 		});
 	}
 
@@ -106,8 +119,8 @@ export default class Game {
 		this.paddleTwo.render(svg);
 
 		this.ball.render(svg, this.paddleOne, this.paddleTwo);
-		this.ball.render(svg, this.paddleOne, this.paddleTwo);
-		this.ball2.render(svg, this.paddleOne, this.paddleTwo);
+		// this.ball.render(svg, this.paddleOne, this.paddleTwo);  //second call used to make small ball faster
+		this.ball2.render(svg, this.paddleOne, this.paddleTwo); //Bigger ball
 
 		this.Score1.render(svg, this.paddleOne.score);
 		this.Score2.render(svg, this.paddleTwo.score);
